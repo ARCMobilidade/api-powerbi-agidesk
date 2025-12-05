@@ -1,0 +1,6 @@
+.env
+resultado.xlsx
+resultado_old.xlsx
+.venv/
+.venv
+.idea
