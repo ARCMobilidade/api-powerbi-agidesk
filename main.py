@@ -3,6 +3,7 @@ import requests
 import openpyxl
 from config.settings import KEY
 
+
 def fetch_page(page_request):
     return requests.get("https://arc.agidesk.com/api/v1/datasets/serviceissues",
                         params={
@@ -11,9 +12,11 @@ def fetch_page(page_request):
                             "forecast": "teams"
                         }).json()
 
+
 wb = openpyxl.Workbook()
 ws = wb.active
 
+page = 1
 headers = [
     "id", "prefix", "title", "content", "created_at", "updated_at", "creator_id",
     "creator", "customer_id", "customer", "customercode", "customertype_id",
@@ -40,8 +43,6 @@ headers = [
 ]
 
 ws.append(headers)
-
-page = 1
 row = 1
 
 while True:
@@ -60,13 +61,17 @@ while True:
     page += 1
 
 try:
-    if os.path.isfile("resultado.xlsx"):
-        os.remove("resultado_old.xlsx")
-        os.rename("resultado.xlsx", "resultado_old.xlsx")
-        print("Arquivo substituído!")
-    else:
-        print("Arquivo salvo!")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-    wb.save("resultado.xlsx")
+    old_file = os.path.join(BASE_DIR, "resultado_old.xlsx")
+    new_file = os.path.join(BASE_DIR, "resultado.xlsx")
+
+    if os.path.isfile(new_file):
+        if os.path.isfile(old_file):
+            os.remove(old_file)
+        os.rename(new_file, old_file)
+
+    wb.save(new_file)
+
 except Exception as e:
     print("Erro ao salvar o arquivo! ->", e)
