@@ -1,6 +1,5 @@
 .env
-resultado.xlsx
-resultado_old.xlsx
+resultado*
 .venv/
 .venv
 .idea
