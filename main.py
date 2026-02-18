@@ -12,6 +12,7 @@ def fetch_page(page):
             "forecast": "teams"
         }).json()
 
+
 wb = openpyxl.Workbook()
 ws = wb.active
 
@@ -40,6 +41,9 @@ headers = [
     "contactbusinessunit_id", "contactbusinessunit", "customertag_id", "customertag",
     "customfield_id", "searchid", "scheduleddate"
 ]
+
+ws.append(headers)
+row = 1
 
 ws.append(headers)
 row = 1
