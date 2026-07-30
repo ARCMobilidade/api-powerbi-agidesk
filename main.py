@@ -17,37 +17,9 @@ wb = openpyxl.Workbook()
 ws = wb.active
 
 page = 1
-headers = [
-    "id", "prefix", "title", "content", "created_at", "updated_at", "creator_id",
-    "creator", "customer_id", "customer", "customercode", "customertype_id",
-    "customerexternalcode", "customertype", "contact_id", "contact", "contactemail",
-    "contactphone", "contactcellphone", "status_id", "status", "suspended",
-    "priority_id", "priority", "type_id", "type", "source_id", "source", "internal",
-    "service_id", "service", "servicetopic_id", "servicetopic", "servicecategory_id",
-    "servicecategory", "servicecatalog_id", "servicecatalog", "department_id",
-    "department", "costcenter_id", "costcenter", "businessunit_id", "businessunit",
-    "tag_id", "tag", "closure_id", "closure", "fact_id", "fact", "factdescription",
-    "action_id", "action", "actiondescription", "cause_id", "cause", "product_id",
-    "product", "causedescription", "list_id", "list", "board_id", "board", "project_id",
-    "project", "workflowstep_id", "workflowstep", "workflow_id", "workflow",
-    "workflowcategory_id", "workflowcategory", "responsible_id", "responsible",
-    "team_id", "team", "responsedate", "started_at", "duedate", "finished_at",
-    "startduration", "finishduration", "totalduration", "absstartduration",
-    "absfinishduration", "abstotalduration", "effort", "amount", "houramount",
-    "timesheet", "module_id", "cost", "teamgroup_id", "teamgroup", "template_id",
-    "template", "cronjob_id", "queuedjob_id", "maincustomer_id", "maincustomer",
-    "teamresponsible_id", "teamresponsible", "solutioncomment", "contactcostcenter_id",
-    "contactcostcenter", "contactdepartment_id", "contactdepartment",
-    "contactbusinessunit_id", "contactbusinessunit", "customertag_id", "customertag",
-    "customfield_id", "searchid", "scheduleddate"
-]
-
-ws.append(headers)
-row = 1
-
-ws.append(headers)
 row = 1
 count_registers = 0
+headers = False
 
 print("\033[92;1;6mMontando novo arquivo. Aguarde...\033[0m")
 while True:
@@ -60,6 +32,10 @@ while True:
     count_registers += len(register)
 
     for reg in register:
+        if not headers:
+            ws.append(list(reg.keys()))
+            headers = True
+
         ws.append(list(reg.values()))
 
     if len(register) < 1000:
